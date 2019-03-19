@@ -114,9 +114,6 @@ export default {
                         this.permissionList.push(item.authority)
                     })
                     this.$cookie.set('permissions', this.permissionList)
-                    /**
-                     * 将用户信息放置在缓存中
-                     */
                     this.filterPermiss(this.bussChildren, this.navList[0].children)
                     this.filterPermiss(this.platChildren, this.navList[1].children)
                     this.filterPermiss(this.systemChildren, this.navList[2].children)

@@ -54,7 +54,7 @@
                 <el-button type="primary" size="small" icon="el-icon-edit" v-permission="'user:edit'"></el-button>
               </router-link>
               <el-button type="primary" size="small" @click="recharge(scope.row.id)" v-permission="'user:recharge'">充值</el-button>
-              <el-button type="warning" size="small" @click="toLogin(scope.row.loginName, scope.row.password)">登录</el-button>
+              <!-- <el-button type="warning" size="small" @click="toLogin(scope.row.loginName, scope.row.password)">登录</el-button> -->
             </template>
           </el-table-column>
         </el-table>
@@ -131,13 +131,13 @@ export default {
           message: '取消充值'
         })
       })
-    },
-    toLogin (loginName, password) {
-      this.$router.push({path: '/login', query:{
-        loginName: loginName,
-        password: password
-      }})
     }
+    // toLogin (loginName, password) {
+    //   this.$router.push({path: '/login', query:{
+    //     loginName: loginName,
+    //     password: password
+    //   }})
+    // }
   }
 }
 </script>

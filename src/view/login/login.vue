@@ -4,7 +4,7 @@
 			<img src="../../assets/zj-logo.png" alt="">
 		</header> -->
 		<div class="ms-login" @keyup.enter="submitForm">
-			<div class="login-title">远程平台</div>
+			<div class="login-title"></div>
 			<div class="input-box user-box">
 				<div class="ipt-label pull-left t-center">账号</div>
 				<input type="text" v-model="loginData.username">
