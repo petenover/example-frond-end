@@ -1,0 +1,36 @@
+.t-center {
+    text-align: center;
+}
+.nav-icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-size: 18px 18px;
+    background-position: center;
+    color: #bfcbd9;
+    font-size: 18px;
+    margin-right: 5px;
+}
+.busi-icon {
+    background-image: url(../assets/busi-icon.svg);
+}
+.teach-icon {
+    background-image: url(../assets/teach-icon.svg);
+}
+.hours-icon {
+    background-image: url(../assets/hours-icon.svg);
+}
+.el-form--inline .el-form-item {
+    margin-right: 30px !important;
+}
+.success-text {
+    color: #67C23A;
+}
+.danger-text {
+    color: #F56C6C;
+}
+.content-cell {
+    padding: 0 !important;
+    border: none !important;
+}
