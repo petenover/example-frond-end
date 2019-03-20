@@ -41,6 +41,12 @@
 				imgUrl: ''
 			}
 		},
+		created () {
+			if (this.$route.query.loginName && this.$route.query.password) {
+				this.loginData.username = this.$route.query.loginName
+				this.loginData.password = this.$route.query.password
+			}
+		},
 		methods: {
 			submitForm () {
 				this.$axios.post('/login', this.loginData).then((res) => {

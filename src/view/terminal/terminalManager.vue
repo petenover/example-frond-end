@@ -59,6 +59,7 @@
                 <el-button type="primary" size="small" icon="el-icon-edit" v-permission="'terminal:edit'"></el-button>
               </router-link>
               <el-button type="danger" size="small" icon="el-icon-delete" @click='remove(scope.row.id)' v-permission="'terminal:delete'"></el-button>
+              <el-button type="success" size="small" icon="el-icon-edit-outline" @click='register(scope.row.id)'></el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -104,19 +105,45 @@
         })
       },
       remove (id) {
-        this.$alert('确定删除吗？', '提示', {
+        this.$confirm('确定删除吗？', '提示', {
           confirmButtonText: '确定',
-          callback: action => {
-            this.$axios.get('/rebuild/terminal/delete', {params: {id: id}}).then((res) => {
-              if (res && res.code === 0) {
-                this.getData()
-                this.$message({
-                  type: 'info',
-                  message: '删除成功'
-                })
-              }
-            })
-          }
+          type: 'error'
+        }).then(() => {
+          this.$axios.get('/rebuild/terminal/delete', {params: {id: id}}).then((res) => {
+            if (res && res.code === 0) {
+              this.getData()
+              this.$message({
+                type: 'info',
+                message: '删除成功'
+              })
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+      },
+      register (id) {
+        this.$confirm('确定注册吗？', '提示', {
+          confirmButtonText: '确定',
+          type: 'success'
+        }).then(() => {
+          this.$axios.get('/rebuild/terminal/register', {params: {id: id}}).then((res) => {
+            if (res && res.code === 0) {
+              this.getData()
+              this.$message({
+                type: 'info',
+                message: '注册成功'
+              })
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消注册'
+          })
         })
       }
     }

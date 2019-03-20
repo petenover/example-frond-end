@@ -1,7 +1,6 @@
 <script>
     import VueCookie from 'vue-cookie'
     
-    const projectList = []
     export default {
         /**
          * 把选择的时间转换成0时区的时间戳
@@ -22,7 +21,6 @@
             } else {
                 return value
             }
-        },
-        projectList
+        }
     }
 </script>

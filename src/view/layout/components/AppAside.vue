@@ -84,6 +84,7 @@
   }
 
   .el-submenu .el-menu-item {
+    width: 100%;
     padding-left: 65px !important;
   }
 </style>

@@ -85,19 +85,24 @@
         })
       },
       remove (id) {
-        this.$alert('确定删除吗？', '提示', {
+        this.$confirm('确定删除吗？', '提示', {
           confirmButtonText: '确定',
-          callback: action => {
-            this.$axios.get('/rebuild/student/delete', {params: {id: id}}).then((res) => {
-              if (res.code === 0) {
-                this.getData()
-                this.$message({
-                  type: 'info',
-                  message: '删除成功'
-                })
-              }
-            })
-          }
+          type: 'error'
+        }).then(() => {
+          this.$axios.get('/rebuild/student/delete', {params: {id: id}}).then((res) => {
+            if (res && res.code === 0) {
+              this.getData()
+              this.$message({
+                type: 'info',
+                message: '删除成功'
+              })
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
         })
       }
     }

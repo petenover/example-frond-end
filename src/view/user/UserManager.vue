@@ -1,6 +1,6 @@
 <template>
   <div class="table">
-    <div class="container">
+    <div class="container" v-show="listShow">
       <el-form :inline="true" :model="queryParams" class="demo-form-inline">
         <el-form-item label="登录名">
           <el-input v-model="queryParams.loginName" placeholder="请输入"></el-input>
@@ -54,7 +54,7 @@
                 <el-button type="primary" size="small" icon="el-icon-edit" v-permission="'user:edit'"></el-button>
               </router-link>
               <el-button type="primary" size="small" @click="recharge(scope.row.id)" v-permission="'user:recharge'">充值</el-button>
-              <!-- <el-button type="warning" size="small" @click="toLogin(scope.row.loginName, scope.row.password)">登录</el-button> -->
+              <el-button type="warning" size="small" @click="toLogin(scope.row.loginName, scope.row.password)">登录</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -75,6 +75,57 @@
         ></el-pagination>
       </div>
     </div>
+    <div class="container" v-show="!listShow">
+      <div class="form-box">
+        <el-form class="form-ipt" ref="form" :model="form" label-width="80px">
+          <el-row>
+            <el-col :span="11">
+              <el-form-item label="登录名">
+                <el-input width="215px" v-model="form.loginName" readonly></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="11">
+              <el-form-item label="用户名">
+                <el-input v-model="form.name" readonly></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="11">
+              <el-form-item label="密码">
+                <el-input width="215px" type="password" v-model="form.password"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="11" :offset="1">
+              <el-button type="success" @click="changePass">提交</el-button>              
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="11">
+              <el-form-item label="区域">
+                <el-select v-model="form.districtCode" placeholder="请选择" disabled>
+                  <el-option
+                    v-for="item in districtList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.code"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="11">
+              <el-form-item label="名额">
+                <el-input width="215px" v-model="form.quota" readonly></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -89,7 +140,16 @@ export default {
       tableData: {
         content: []
       },
-      districtList: []
+      districtList: [],
+      listShow: null,
+      form: {
+        loginName: '',
+        name: '',
+        password: '',
+        districtCode: '',
+        quota: ''
+      },
+      passDis: true
     }
   },
   created () {
@@ -98,6 +158,12 @@ export default {
         this.districtList = res.data
       }
     })
+  },
+  mounted () {
+    setTimeout(() => {
+      this.listShow = this.$cookie.get('flag') === 'true'
+      if (!this.listShow) this.getDetail()
+    }, 100)
   },
   methods: {
     getData () {
@@ -108,6 +174,7 @@ export default {
 				}
 			})
     },
+    // 名额充值
     recharge (id) {
       this.$prompt('请输入充值数量', '提示', {
         confirmButtonText: '确定',
@@ -131,13 +198,50 @@ export default {
           message: '取消充值'
         })
       })
+    },
+    // 用户跳转登录
+    toLogin (loginName, password) {
+      this.$router.push({
+        path: '/login',
+        query: {
+          loginName: loginName,
+          password: password
+        }
+      })
+    },
+    getDetail () {
+      this.$axios.get('/system/user/detail', {
+        params: {
+          id: this.$cookie.get('userId')
+        }
+      }).then(res => {
+        if (res) {
+          this.form = res.data
+        }
+      })
+    },
+    // 修改密码
+    changePass () {
+      this.$confirm('确定修改吗？', '提示', {
+        confirmButtonText: '确定',
+        type: 'error'
+      }).then(() => {
+        this.$axios.post('/system/user/reset', {
+          id: this.$cookie.get('userId'),
+          password: this.form.password
+        }).then(res => {
+          this.$message({
+            type: 'info',
+            message: '修改成功'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消修改'
+        })
+      })
     }
-    // toLogin (loginName, password) {
-    //   this.$router.push({path: '/login', query:{
-    //     loginName: loginName,
-    //     password: password
-    //   }})
-    // }
   }
 }
 </script>

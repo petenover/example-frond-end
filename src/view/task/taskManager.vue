@@ -53,6 +53,10 @@
             label="日期">
           </el-table-column>
           <el-table-column
+            prop="startTime"
+            label="任务开始时间">
+          </el-table-column>
+          <el-table-column
             prop="endTime"
             label="任务结束时间">
           </el-table-column>
