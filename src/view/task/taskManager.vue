@@ -13,8 +13,9 @@
         </el-form-item>
         <el-form-item label="日期">
           <el-date-picker
-            v-model="queryParams.date"
+            v-model="date"
             type="date"
+            @change="dateChange"
             placeholder="选择日期">
           </el-date-picker>
         </el-form-item>
@@ -91,14 +92,24 @@
     data () {
       return {
         username: '',
+        date: new Date(),
         tableData: {
           content: []
         }
       }
     },
+    created () {
+      this.dateChange()
+    },
     methods: {
+      dateChange () {
+        if (this.date) {
+          this.queryParams.date = moment(this.date).format('YYYY-MM-DD')
+        } else {
+          this.queryParams.date = ''
+        }
+      },
       getData () {
-        this.queryParams.date = moment(this.queryParams.date).format('YYYY-MM-DD')
         this.$axios.get('/record/task/log', {params: this.queryParams}).then((res) => {
           if (res && res.data) {
             this.tableData = res.data
