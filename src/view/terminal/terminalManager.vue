@@ -59,7 +59,7 @@
                 <el-button type="primary" size="small" icon="el-icon-edit" v-permission="'terminal:edit'"></el-button>
               </router-link>
               <el-button type="danger" size="small" icon="el-icon-delete" @click='remove(scope.row.id)' v-permission="'terminal:delete'"></el-button>
-              <el-button type="success" size="small" icon="el-icon-edit-outline" @click='register(scope.row.id)'></el-button>
+              <el-button type="success" size="small" style="margin-left:2px" @click='register(scope.row.id)'>注册</el-button>
             </template>
           </el-table-column>
         </el-table>

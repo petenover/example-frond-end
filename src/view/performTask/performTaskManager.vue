@@ -3,6 +3,14 @@
     <div class="container">
       <div class="form-box">
         <el-form class="form-ipt" ref="form" :model="form" :rules="rules" label-width="120px">
+          <el-form-item label="选择日期" label-width="150px">
+            <el-date-picker
+              v-model="form.date"
+              type="date"
+              @change="timeChange"
+              placeholder="选择日期">
+            </el-date-picker>
+          </el-form-item>
           <el-form-item label="任务开始-结束时间" label-width="150px">
             <el-time-picker
               is-range
@@ -114,6 +122,7 @@
       return {
         times: [new Date(), new Date()],
         form: {
+          date: new Date(),          // 任务执行日期
           startTime: '',     // 任务开始时间
           endTime: '',       // 任务结束时间
           terminalNo: '',    // 终端编号
@@ -172,8 +181,11 @@
     methods: {
       // 时间格式转换
       timeChange (value) {
-        this.form.startTime = moment(this.times[0]).format('YYYY-MM-DD HH:mm:ss')
-        this.form.endTime = moment(this.times[1]).format('YYYY-MM-DD HH:mm:ss')
+        var date = moment(this.form.date).format('YYYY-MM-DD')
+        var startTime = moment(this.times[0]).format('HH:mm:ss')
+        var endTime = moment(this.times[1]).format('HH:mm:ss')
+        this.form.startTime = date + ' ' + startTime
+        this.form.endTime = date + ' ' + endTime
       },
       // 校验终端是否多处登录
       terminalCheck (value) {
@@ -230,6 +242,7 @@
           }
         } else {
           this.$message.error('请先选择学员')
+          return false
         }
       },
       onSubmit (formName) {

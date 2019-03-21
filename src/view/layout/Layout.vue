@@ -116,7 +116,6 @@ export default {
                     this.$cookie.set('permissions', this.permissionList)
                     this.$cookie.set('flag', this.userInfo.flag)
                     this.$cookie.set('userId', this.userInfo.id)
-                    console.log('me----------' + this.$cookie.get('flag'))
                     this.filterPermiss(this.bussChildren, this.navList[0].children)
                     this.filterPermiss(this.platChildren, this.navList[1].children)
                     this.filterPermiss(this.systemChildren, this.navList[2].children)

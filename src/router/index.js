@@ -16,7 +16,7 @@ export default new Router({
     {path: '/404', component: _import('404/404'), name: '404'},
     {
       path: '',
-      redirect: '/system/user/manager'
+      redirect: '/system/performTask/manager'
     },
     { // 系统设置
       meta: {name: '系统设置'},
