@@ -144,7 +144,7 @@
           vm.pointList = e.overlay.getPath()
           // console.log(e.overlay.getPath())
           vm.pointList.forEach((value, index) => {
-            vm.changePointList.push(value.lat + ',' + value.lng)
+            vm.changePointList.push(value.lng + ',' + value.lat)
           })
           console.log(vm.changePointList)
           vm.form.coordinatings = vm.changePointList.join(';')

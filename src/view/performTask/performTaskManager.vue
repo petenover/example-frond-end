@@ -196,6 +196,10 @@
         }).then((res) => {
           if (res && res.code === 0) {
             this.coachDis = false
+          } else {
+            setTimeout(() => {
+              window.location.reload()
+            }, 1000)
           }
         })
       },
@@ -208,6 +212,10 @@
         }).then((res) => {
           if (res && res.code === 0) {
             this.studentDis = false
+          } else {
+            setTimeout(() => {
+              window.location.reload()
+            }, 1000)
           }
         })
       },
@@ -220,6 +228,10 @@
         }).then((res) => {
           if (res && res.code === 0) {
             this.otherDis = false
+          } else {
+            setTimeout(() => {
+              window.location.reload()
+            }, 1000)
           }
         })
       },
