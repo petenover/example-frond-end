@@ -99,7 +99,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="11" :offset="1">
-              <el-button type="success" @click="changePass">提交</el-button>              
+              <el-button type="success" @click="changePass">提交</el-button>
             </el-col>
           </el-row>
           <el-row>
