@@ -5,7 +5,7 @@
         <el-form class="form-ipt" ref="form" :model="form" :rules="rules" label-width="120px">
           <el-form-item label="选择日期" label-width="150px">
             <el-date-picker
-              v-model="form.date"
+              v-model="date"
               type="date"
               @change="timeChange"
               placeholder="选择日期">
@@ -121,13 +121,15 @@
     data: function () {
       return {
         times: [new Date(), new Date()],
+        date: new Date(),    // 任务执行日期
         form: {
-          date: new Date(),          // 任务执行日期
           startTime: '',     // 任务开始时间
           endTime: '',       // 任务结束时间
           terminalNo: '',    // 终端编号
           coachNo: '',       // 教练编号
+          coachName: '',     // 教练名称
           studentNo: '',     // 学员编号
+          studentName: '',   // 学员名称
           trainType: '',     // 培训车型
           partType: '',      // 培训部分
           projectType: '',   // 培训项目
@@ -181,7 +183,7 @@
     methods: {
       // 时间格式转换
       timeChange (value) {
-        var date = moment(this.form.date).format('YYYY-MM-DD')
+        var date = moment(this.date).format('YYYY-MM-DD')
         var startTime = moment(this.times[0]).format('HH:mm:ss')
         var endTime = moment(this.times[1]).format('HH:mm:ss')
         this.form.startTime = date + ' ' + startTime
@@ -260,9 +262,21 @@
       onSubmit (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$axios.post('/kernel/build/task', this.form).then(res => {
-              console.log(res)
+            this.coachList.forEach((item) => {
+              if (this.form.coachNo === item.coachNo) {
+                this.form.coachName = item.name
+              }
             })
+            this.studentList.forEach((item) => {
+              if (this.form.studentNo === item.studentNo) {
+                this.form.studentName = item.name
+              }
+            })
+            if (this.form.coachName && this.form.studentName) {
+              this.$axios.post('/kernel/build/task', this.form).then(res => {
+                console.log(res)
+              })
+            }
           } else {
             return false
           }
