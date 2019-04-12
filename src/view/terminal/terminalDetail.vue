@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <div class="form-box">
-        <el-form class="form-ipt" ref="form" :rules="subjectRules" :model="form" label-width="130px">
+        <el-form class="form-ipt" ref="form" :rules="rules" :model="form" label-width="130px">
           <el-row>
             <el-col :span="11">
               <el-form-item label="终端编号" prop="no">
@@ -29,7 +29,7 @@
           </el-row>
           <el-row>
             <el-col :span="11">
-              <el-form-item label="手机号" prop="model">
+              <el-form-item label="手机号" prop="phone">
                 <el-input v-model="form.phone"></el-input>
               </el-form-item>
             </el-col>
@@ -71,7 +71,25 @@
           phone: '',
           carId: ''
         },
-        carList: []
+        carList: [],
+        rules: {
+          no: [
+            { required: true, trigger: 'blur' }
+          ],
+          serialNum: [
+            { required: true, trigger: 'blur' }
+          ],
+          model: [
+            { required: true, trigger: 'blur' }
+          ],
+          imei: [
+            { required: true, trigger: 'blur' }
+          ],
+          phone: [
+            { required: true, trigger: 'blur' },
+            { pattern: /^1[345789]\d{9}$/, message: '手机号格式有误！' }
+          ]
+        }
       }
     },
     created () {
@@ -103,6 +121,7 @@
             delete this.form.createdAt
             delete this.form.updatedAt
             delete this.form.delFlag
+            if (!this.form.carId) delete this.form.carId
             this.$axios.post('/rebuild/terminal/save', this.form).then((res) => {
               this.goBack()
             })

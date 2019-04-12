@@ -96,7 +96,7 @@ export default {
                 },
                 {
                     name: '任务执行',
-                    permission: 'task:view',
+                    permission: 'task:build',
                     url: '/system/performTask/manager'
                 }
             ]
@@ -107,7 +107,7 @@ export default {
             this.collapse = msg
         })
         if (this.$cookie.get('isLogin') === 'true') {
-            this.$axios.post('/me').then(res => {
+            this.$axios.get('/me').then(res => {
                 if (res && res.data) {
                     this.userInfo = res.data
                     res.data.permissions.forEach(item => {
