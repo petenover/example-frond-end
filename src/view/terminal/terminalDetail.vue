@@ -86,8 +86,7 @@
             { required: true, trigger: 'blur' }
           ],
           phone: [
-            { required: true, trigger: 'blur' },
-            { pattern: /^1[345789]\d{9}$/, message: '手机号格式有误！' }
+            { required: true, trigger: 'blur' }
           ]
         }
       }

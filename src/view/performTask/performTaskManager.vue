@@ -22,6 +22,16 @@
               @change="timeChange">
             </el-time-picker>
           </el-form-item>
+          <el-form-item label="培训部分" label-width="150px">
+            <el-select v-model="form.partType" placeholder="请选择" @change="partCheck">
+              <el-option
+                v-for="item in partTypeList"
+                :key="item.code"
+                :label="item.info"
+                :value="item.code">
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="选择终端" label-width="150px">
             <el-select v-model="form.terminalNo" placeholder="请选择" @change="terminalCheck">
               <el-option
@@ -62,16 +72,6 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="培训部分" label-width="150px">
-            <el-select v-model="form.partType" placeholder="请选择" :disabled="otherDis">
-              <el-option
-                v-for="item in partTypeList"
-                :key="item.code"
-                :label="item.info"
-                :value="item.code">
-              </el-option>
-            </el-select>
-          </el-form-item>
           <el-form-item label="培训项目" label-width="150px">
             <el-select v-model="form.projectType" placeholder="请选择" filterable :disabled="otherDis">
               <el-option
@@ -82,7 +82,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="选择轨迹" label-width="150px">
+          <el-form-item label="选择轨迹" label-width="150px" v-if="form.partType === '2' || form.partType === '3'">
             <el-select v-model="form.trackId" placeholder="请选择" :disabled="otherDis">
               <el-option
                 v-for="item in trackList"
@@ -131,7 +131,7 @@
           studentNo: '',     // 学员编号
           studentName: '',   // 学员名称
           trainType: '',     // 培训车型
-          partType: '',      // 培训部分
+          partType: '1',      // 培训部分
           projectType: '',   // 培训项目
           trackId: '',       // 轨迹ID
           file: ''           // 学员培训图片压缩包
@@ -150,9 +150,7 @@
     },
     created () {
       // 查询终端
-      this.$axios.get('/rebuild/terminal/entry').then((res) => {
-        this.terminalList = res ? res.data : []
-      })
+      this.partCheck('1')
       // 查询教练
       this.$axios.get('/rebuild/coach/entry').then((res) => {
         this.coachList = res ? res.data : []
@@ -188,6 +186,15 @@
         var endTime = moment(this.times[1]).format('HH:mm:ss')
         this.form.startTime = date + ' ' + startTime
         this.form.endTime = date + ' ' + endTime
+      },
+      // 培训部份切换刷新终端列表
+      partCheck (value) {
+        // 查询终端
+        this.$axios.get('/rebuild/terminal/entry', {params: {
+          carId: value === '2' || value === '3'
+        }}).then((res) => {
+          this.terminalList = res ? res.data : []
+        })
       },
       // 校验终端是否多处登录
       terminalCheck (value) {
