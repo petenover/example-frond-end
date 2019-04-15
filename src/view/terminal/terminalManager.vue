@@ -58,7 +58,7 @@
                            class="pull-left m-r-xm">
                 <el-button type="primary" size="small" icon="el-icon-edit" v-permission="'terminal:edit'"></el-button>
               </router-link>
-              <el-button type="danger" size="small" icon="el-icon-delete" @click='remove(scope.row.id)' v-permission="'terminal:delete'"></el-button>
+              <el-button type="danger" size="small" icon="el-icon-delete" @click='remove(scope.row.id)' v-permission="'terminal:register'"></el-button>
               <el-button type="success" size="small" style="margin-left:2px" @click='register(scope.row.id)'>注册</el-button>
             </template>
           </el-table-column>
@@ -68,7 +68,6 @@
         <router-link :to="{path: $route.path.replace(/manager/g, 'detail')}">
           <el-button class="pull-left" type="success" v-permission="'terminal:edit'">添加</el-button>
         </router-link>
-
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"

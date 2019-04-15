@@ -104,7 +104,6 @@
           </el-form-item>
           <el-form-item  label-width="150px">
             <el-button type="primary" @click="onSubmit('form')">提交</el-button>
-            <el-button @click="goBack">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
