@@ -46,10 +46,6 @@
             label="终端编号">
           </el-table-column>
           <el-table-column
-            prop="terminalNo"
-            label="终端编号">
-          </el-table-column>
-          <el-table-column
             prop="date"
             label="日期">
           </el-table-column>

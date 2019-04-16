@@ -82,7 +82,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="选择轨迹" label-width="150px" v-if="form.partType === '2' || form.partType === '3'">
+          <el-form-item label="选择轨迹" label-width="150px">
             <el-select v-model="form.trackId" placeholder="请选择" :disabled="otherDis">
               <el-option
                 v-for="item in trackList"
@@ -96,10 +96,11 @@
             <el-upload class="avatar-uploader"
                         :action="baseUrl + '/kernel/build/upload/zip'"
                         :data="{'studentNo': form.studentNo}"
-                        :show-file-list="false"
+                        :show-file-list="true"
                         :on-success="handleAvatarSuccess"
                         :before-upload="beforeAvatarUpload">
               <i class="el-icon-plus avatar-uploader-icon"></i>
+              <div slot="tip" class="el-upload__tip">只能上传zip文件</div>
             </el-upload>
           </el-form-item>
           <el-form-item  label-width="150px">
@@ -259,17 +260,15 @@
         })
       },
       beforeAvatarUpload (file) {
-        const isZIP = file.type === 'application/x-zip-compressed'
-        const isLt5M = file.size / 1024 / 1024 < 5
-        if (this.form.studentNo) {
-          if (!isZIP) {
-            this.$message.error('压缩包只能是 zip 格式!')
-            if (!isLt5M) {
-              this.$message.error('压缩包大小不能超过 5MB!')
-            }
-            return isZIP && isLt5M
-          }
-        } else {
+        // let fileName = file.name
+        // let pos = fileName.lastIndexOf('.')
+        // let lastName = fileName.substring(pos, fileName.length)
+        // const isZIP = file.type === 'application/x-zip-compressed'
+        // const isLt5M = file.size / 1024 < 500
+        if (!this.form.studentNo) {
+          // if (!isLt5M) {
+          //   this.$message.error('压缩包大小不能超过 5MB!')
+          // }
           this.$message.error('请先选择学员')
           return false
         }
@@ -287,6 +286,7 @@
                 this.form.studentName = item.name
               }
             })
+            if (!this.form.trackId) delete this.form.trackId
             if (this.form.coachName && this.form.studentName) {
               this.$axios.post('/kernel/build/task', this.form).then(res => {
                 console.log(res)
