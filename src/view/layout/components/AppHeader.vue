@@ -4,12 +4,15 @@
         <div class="logo">
             <!-- <div class="logo-img"></div> -->
             <transition name="el-fade-in">
-                <div class="logo-title t-center" v-show="!collapse">学时生成平台</div>
+                <div class="logo-title t-center" v-show="!collapse">计时平台测试系统</div>
             </transition>
         </div>
         <!-- 折叠按钮 -->
         <div class="collapse-btn" @click="collapseChage">
             <i class="el-icon-menu"></i>
+        </div>
+        <div class="pop-text">
+            本工具仅供测试计时平台使用，请勿非法应用！因非法应用产生的法律风险，由使用者自行承当法律风险！
         </div>
         <div class="header-right">
             <div class="header-user-con">
@@ -151,6 +154,12 @@
         display: flex;
         height: 60px;
         align-items: center;
+    }
+    .pop-text {
+        margin: 20px 0 0 100px;
+        font-size: 14px;
+        float: left;
+        color: red;
     }
     .btn-fullscreen {
         transform: rotate(45deg);

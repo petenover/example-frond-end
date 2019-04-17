@@ -4,7 +4,7 @@
 			<img src="../../assets/zj-logo.png" alt="">
 		</header> -->
 		<div class="ms-login" @keyup.enter="submitForm">
-			<div class="login-title"></div>
+			<div class="login-title">计时平台测试系统</div>
 			<div class="input-box user-box">
 				<div class="ipt-label pull-left t-center">账号</div>
 				<input type="text" v-model="loginData.username">
@@ -25,6 +25,9 @@
 			</div>
 			<p class="msg t-center">{{msg}}</p>
 		</div>
+		<p class="bottom-text">
+			本工具仅供测试计时平台使用，请勿非法应用！因非法应用产生的法律风险，由使用者自行承当法律风险！
+		</p>
 	</div>
 </template>
 <script>
@@ -178,5 +181,14 @@
 		color: #D45E63;
 		font-size: 12px;
 		padding-top: 8px;
+	}
+	.bottom-text {
+		position: absolute;
+		top: 450px;
+		left: 0px;
+		right: 0px;
+		padding: 20px 0;
+		text-align: center;
+		color: red;
 	}
 </style>
