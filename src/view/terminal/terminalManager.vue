@@ -49,7 +49,7 @@
             label="imei号">
           </el-table-column>
           <el-table-column
-            prop="carId"
+            prop="licenceNum"
             label="车辆牌号">
           </el-table-column>
           <el-table-column label="操作">
