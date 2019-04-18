@@ -34,12 +34,24 @@
             width="60px">
           </el-table-column>
           <el-table-column
+            prop="studentName"
+            label="学员姓名">
+          </el-table-column>
+          <el-table-column
             prop="studentNo"
             label="学员编号">
           </el-table-column>
           <el-table-column
+            prop="coachName"
+            label="教练姓名">
+          </el-table-column>
+          <el-table-column
             prop="coachNo"
             label="教练编号">
+          </el-table-column>
+          <el-table-column
+            prop="licenceNum"
+            label="车牌号">
           </el-table-column>
           <el-table-column
             prop="terminalNo"
@@ -60,6 +72,9 @@
           <el-table-column
             prop="duration"
             label="任务时长">
+            <template slot-scope="scope">
+              <span>{{Math.floor(scope.row.duration / 45) + '学时' + (scope.row.duration % 45) + '分钟'}}</span>
+            </template>
           </el-table-column>
         </el-table>
       </div>

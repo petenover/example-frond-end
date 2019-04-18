@@ -10,7 +10,7 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="11">
-                            <el-form-item label="车辆颜色">
+                            <el-form-item label="车牌颜色">
                             <el-select v-model="form.color" placeholder="请选择">
                                 <el-option
                                 v-for="item in colorList"
