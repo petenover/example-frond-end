@@ -69,7 +69,8 @@
           model: '',
           imei: '',
           phone: '',
-          carId: ''
+          carId: '',
+          licenceNum: ''
         },
         carList: [],
         rules: {
@@ -120,7 +121,16 @@
             delete this.form.createdAt
             delete this.form.updatedAt
             delete this.form.delFlag
-            if (!this.form.carId) delete this.form.carId
+            if (this.form.carId) {
+              this.carList.forEach((item) => {
+                if (this.form.carId === item.id) {
+                  this.form.licenceNum = item.licenceNum
+                }
+              })
+            } else {
+              delete this.form.carId
+              delete this.form.licenceNum
+            }
             this.$axios.post('/rebuild/terminal/save', this.form).then((res) => {
               this.goBack()
             })
