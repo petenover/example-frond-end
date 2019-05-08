@@ -198,6 +198,7 @@
       },
       // 校验终端是否多处登录
       terminalCheck (value) {
+        if (this.form.partType === '1' || this.form.partType === '4') return
         this.$axios.get('/kernel/build/checkout/terminal', {params: {
           terminalNo: value,
           startTime: this.form.startTime,
