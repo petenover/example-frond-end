@@ -6,12 +6,12 @@
           <el-row>
             <el-col :span="11">
               <el-form-item label="终端编号" prop="no">
-                <el-input v-model="form.no"></el-input>
+                <el-input v-model="form.no" :disabled="offDis"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="11">
               <el-form-item label="序列号" prop="serialNum">
-                <el-input v-model="form.serialNum"></el-input>
+                <el-input v-model="form.serialNum" :disabled="offDis"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -23,14 +23,14 @@
             </el-col>
             <el-col :span="11">
               <el-form-item label="imei号" prop="imei">
-                <el-input v-model="form.imei"></el-input>
+                <el-input v-model="form.imei" :disabled="offDis"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="11">
               <el-form-item label="手机号" prop="phone">
-                <el-input v-model="form.phone"></el-input>
+                <el-input v-model="form.phone" :disabled="offDis"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="11">
@@ -72,6 +72,7 @@
           carId: '',
           licenceNum: ''
         },
+        offDis: false,
         carList: [],
         rules: {
           no: [
@@ -104,6 +105,7 @@
     methods: {
       defaultSet () {
         if (this.$route.query.id) {
+          this.offDis = true
           this.$axios.get('/rebuild/terminal/detail', {
             params: {
               id: this.$route.query.id

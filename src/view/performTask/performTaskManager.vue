@@ -198,42 +198,49 @@
       },
       // 校验终端是否多处登录
       terminalCheck (value) {
-        if (this.form.partType === '1' || this.form.partType === '4') return
-        this.$axios.get('/kernel/build/checkout/terminal', {params: {
-          terminalNo: value,
-          startTime: this.form.startTime,
-          endTime: this.form.endTime
-        }}).then((res) => {
-          if (res && res.code === 0) {
-            this.coachDis = false
-          } else {
-            this.$alert('所选终端存在异常，请重新选择！', '提示', {
-              confirmButtonText: '确定',
-              callback: action => {
-                this.form.terminalNo = ''
-              }
-            })
-          }
-        })
+        if (this.form.partType === '1' || this.form.partType === '4') {
+          this.coachDis = false
+        } else {
+          this.$axios.get('/kernel/build/checkout/terminal', {params: {
+            terminalNo: value,
+            startTime: this.form.startTime,
+            endTime: this.form.endTime
+          }}).then((res) => {
+            if (res && res.code === 0) {
+              this.coachDis = false
+            } else {
+              this.$alert('所选终端存在异常，请重新选择！', '提示', {
+                confirmButtonText: '确定',
+                callback: action => {
+                  this.form.terminalNo = ''
+                }
+              })
+            }
+          })
+        }
       },
       // 校验教练是否同时带教
       coachCheck (value) {
-        this.$axios.get('/kernel/build/checkout/coach', {params: {
-          coachNo: value,
-          startTime: this.form.startTime,
-          endTime: this.form.endTime
-        }}).then((res) => {
-          if (res && res.code === 0) {
-            this.studentDis = false
-          } else {
-            this.$alert('所选教练存在异常，请重新选择！', '提示', {
-              confirmButtonText: '确定',
-              callback: action => {
-                this.form.coachNo = ''
-              }
-            })
-          }
-        })
+        if (this.form.partType === '1' || this.form.partType === '4') {
+          this.studentDis = false
+        } else {
+          this.$axios.get('/kernel/build/checkout/coach', {params: {
+            coachNo: value,
+            startTime: this.form.startTime,
+            endTime: this.form.endTime
+          }}).then((res) => {
+            if (res && res.code === 0) {
+              this.studentDis = false
+            } else {
+              this.$alert('所选教练存在异常，请重新选择！', '提示', {
+                confirmButtonText: '确定',
+                callback: action => {
+                  this.form.coachNo = ''
+                }
+              })
+            }
+          })
+        }
       },
       // 校验学员是否多处登录
       studentCheck (value) {
