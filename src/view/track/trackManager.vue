@@ -15,6 +15,18 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="启禁状态">
+          <template>
+            <el-select v-model="queryParams.disable" clearable placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </template>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="getData">查询</el-button>
         </el-form-item>
@@ -47,11 +59,25 @@
               <span slot="reference">{{ scope.row.coordinatings.substr(0,30)+'...' }}</span>
             </template>
           </el-table-column>
+          <el-table-column
+            prop="disable"
+            label="启用/禁用状态">
+            <template slot-scope="scope">
+              <el-switch
+                v-model="scope.row.disable"
+                active-color="#ff4949"
+                inactive-color="#13ce66"
+                :active-value="1"
+                :inactive-value="0"
+                @change="changeStatus(scope.row.id,$event)">
+              </el-switch>
+            </template>
+          </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <router-link :to="{path: $route.path.replace(/manager/g, 'detail'), query: {id: scope.row.id}}"
                            class="pull-left m-r-xm">
-                <el-button type="primary" size="small" icon="el-icon-edit" v-permission="'track:edit'"></el-button>
+                <el-button type="primary" size="small" v-permission="'track:edit'">编辑</el-button>
               </router-link>
               <el-button type="danger" size="small" icon="el-icon-delete" @click='remove(scope.row.id)' v-permission="'track:delete'"></el-button>
             </template>
@@ -105,6 +131,16 @@
             value: 4,
             label: '第四部分'
           }
+        ],
+        options: [
+          {
+            value: 0,
+            label: '启用'
+          },
+          {
+            value: 1,
+            label: '禁用'
+          }
         ]
       }
     },
@@ -113,6 +149,16 @@
         this.$axios.get('/rebuild/track/list', {params: this.queryParams}).then((res) => {
           if (res && res.data) {
             this.tableData = res.data
+          }
+        })
+      },
+      changeStatus (id, status) {
+        this.$axios.post('/rebuild/track/disable', {
+          id: id,
+          disable: status
+        }).then(res => {
+          if (res && res.code === 0) {
+            this.getData()
           }
         })
       },

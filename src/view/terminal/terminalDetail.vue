@@ -94,10 +94,9 @@
       }
     },
     created () {
-      this.$axios.get('/rebuild/car/list').then((res) => {
+      this.$axios.get('/rebuild/car/entry').then((res) => {
         if (res && res.data) {
-          console.log(res.data)
-          this.carList = res.data.content
+          this.carList = res.data
         }
       })
       this.defaultSet()
