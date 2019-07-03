@@ -33,6 +33,10 @@
             prop="photoInterval"
             label="照片上传时间间隔">
           </el-table-column>
+          <el-table-column
+            prop="districtNames"
+            label="支持地区">
+          </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
               <router-link :to="{path: $route.path.replace(/manager/g, 'detail'), query: {id: scope.row.id}}"

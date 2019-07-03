@@ -5,18 +5,19 @@
         <el-form-item label="车辆牌号">
           <el-input v-model="queryParams.licenceNum" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="启禁状态">
-          <template>
-            <el-select v-model="queryParams.disable" clearable placeholder="请选择">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </template>
-        </el-form-item>
+<!--        <el-form-item label="启禁状态">-->
+<!--          <template>-->
+<!--            <el-select v-model="queryParams.disable" clearable placeholder="请选择">-->
+<!--              <el-option-->
+<!--                v-for="item in options"-->
+<!--                :key="item.value"-->
+<!--                :label="item.label"-->
+<!--                :value="item.value">-->
+<!--              </el-option>-->
+<!--            </el-select>-->
+<!--          </template>-->
+<!--        </el-form-item>-->
+        <enable-status @change="selectChange"></enable-status>
         <el-form-item>
           <el-button type="primary" @click="getData">查询</el-button>
         </el-form-item>
@@ -142,6 +143,9 @@
             this.tableData = res.data
           }
         })
+      },
+      selectChange (value) {
+        this.queryParams.disable = value
       },
       changeStatus (id, status) {
         this.$axios.post('/rebuild/car/disable', {

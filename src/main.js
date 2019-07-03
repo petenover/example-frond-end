@@ -13,6 +13,8 @@ import VueCookie from 'vue-cookie'
 
 import global from './components/tool/Global'
 
+import EnableStatus from './components/EnableStatus'
+
 /* element-ui */
 import Element from 'element-ui'
 
@@ -35,6 +37,8 @@ Vue.use(Filter)
 
 /* axios */
 Vue.use(Axios)
+
+Vue.component('enable-status', EnableStatus)
 
 Vue.prototype.GLOBAL = global
 

@@ -17,8 +17,8 @@
           </el-row>
           <el-row>
             <el-col :span="11">
-              <el-form-item label="区域">
-                <el-select v-model="form.districtCode" placeholder="请选择">
+              <el-form-item label="区域" prop="name">
+                <el-select v-model="form.districtCode" clearable filterable placeholder="选择您驾校备案所在区域">
                   <el-option
                     v-for="item in districtList"
                     :key="item.id"

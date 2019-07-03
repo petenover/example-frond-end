@@ -10,10 +10,10 @@
         </el-form-item>
         <el-form-item label="区域">
           <el-select v-model="queryParams.districtCode" placeholder="请选择" clearable>
-            <el-option 
+            <el-option
               v-for="item in districtList"
               :key="item.id"
-              :label="item.name" 
+              :label="item.name"
               :value="item.code"
             ></el-option>
           </el-select>
@@ -24,26 +24,30 @@
       </el-form>
       <div class="content-cell">
         <el-table :data="tableData.content" border style="width: 100%">
-          <el-table-column 
-            prop="id" 
-            label="序号" 
+          <el-table-column
+            prop="id"
+            label="序号"
             width="60px">
           </el-table-column>
-          <el-table-column 
-            prop="loginName" 
+          <el-table-column
+            prop="loginName"
             label="用户名">
           </el-table-column>
-          <el-table-column 
-            prop="name" 
+          <el-table-column
+            prop="name"
             label="用户姓名">
           </el-table-column>
-          <el-table-column 
-            prop="quota" 
+          <el-table-column
+            prop="quota"
             label="剩余名额">
           </el-table-column>
-          <el-table-column 
-            prop="districtName" 
+          <el-table-column
+            prop="districtName"
             label="区域">
+          </el-table-column>
+          <el-table-column
+            prop="expiryDate"
+            label="过期时间">
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
@@ -53,11 +57,28 @@
               >
                 <el-button type="primary" size="small" icon="el-icon-edit" v-permission="'user:edit'"></el-button>
               </router-link>
-              <el-button type="primary" size="small" @click="recharge(scope.row.id)" v-permission="'user:recharge'">充值</el-button>
+              <el-button type="primary" size="small" @click="openDialog(scope.row.id)" v-permission="'user:recharge'">充值</el-button>
               <el-button type="warning" size="small" @click="toLogin(scope.row.loginName, scope.row.password)">登录</el-button>
             </template>
           </el-table-column>
         </el-table>
+        <el-dialog title="提示" :visible.sync="dialogFormVisible">
+          <el-form :model="form" ref="form">
+            <el-form-item label="充值类型" label-width='80px'>
+              <el-select v-model="form.type" placeholder="请选择充值类型" clearable>
+                <el-option label="充值名额" value="recharge"></el-option>
+                <el-option label="延长有效期" value="prolong"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item :label="form.type === 'recharge' ? '充值数量' : '延长天数'" label-width='80px'>
+              <el-input type="number" v-model="form.quota" min="1" max="99999" placeholder="请输入1-99999的正整数" clearable></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="recharge(form.id,form.quota,form.type)">确 定</el-button>
+          </div>
+        </el-dialog>
       </div>
       <div class="pagination">
         <router-link :to="{path: $route.path.replace(/manager/g, 'detail')}">
@@ -147,9 +168,12 @@ export default {
         name: '',
         password: '',
         districtCode: '',
-        quota: ''
+        quota: '',
+        type: 'recharge',
+        id: ''
       },
-      passDis: true
+      passDis: true,
+      dialogFormVisible: false
     }
   },
   created () {
@@ -174,25 +198,25 @@ export default {
 				}
 			})
     },
+    openDialog (id) {
+      this.dialogFormVisible = true
+      this.form.id = id
+    },
     // 名额充值
-    recharge (id) {
-      this.$prompt('请输入充值数量', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        inputPattern: /\d/,
-        inputErrorMessage: '请输入整数'
-      }).then(({ value }) => {
+    recharge (id, value, type) {
         this.$axios.post('/system/user/recharge', {
           id: id,
-          count: value
+          count: value,
+          type: type
         }).then(res => {
           this.getData()
+          this.dialogFormVisible = false
 					this.$message({
             type: 'success',
             message: '充值成功'
           })
-				})
-      }).catch(() => {
+				}).catch(() => {
+        this.dialogFormVisible = false
         this.$message({
           type: 'info',
           message: '取消充值'

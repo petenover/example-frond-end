@@ -23,6 +23,18 @@
             </el-col>
           </el-row>
           <el-row>
+            <el-col :span="11">
+              <el-form-item label="选择支持地区" label-width="150px">
+                <el-select v-model="form.districtCodes" @change="getNames" filterable multiple placeholder="请选择">
+                  <el-option
+                    v-for="item in districtList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.code">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
           </el-row>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">提交</el-button>
@@ -42,12 +54,18 @@
         form: {
           host: '',
           port: '',
-          photoInterval: ''
-        }
+          photoInterval: '',
+          districtCodes: [],
+          districtNames: []
+        },
+        districtList: []
       }
     },
     created () {
       this.defaultSet()
+      this.$axios.get('/system/district/list').then(res => {
+        this.districtList = res ? res.data : []
+      })
     },
     methods: {
       defaultSet () {
@@ -60,6 +78,9 @@
             }
           })
         }
+      },
+      getNames (value) {
+        this.form.districtNames = this.districtList.filter(it => value.indexOf(it.code) !== -1).map(it => it.name)
       },
       onSubmit () {
         delete this.form.createdAt
