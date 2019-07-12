@@ -6,23 +6,31 @@
           <el-row>
             <el-col :span="11">
               <el-form-item label="学员名称">
-                <el-input v-model="form.name"></el-input>
+                <el-input v-model="form.name" :disabled="defaultInput"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="11">
               <el-form-item label="身份证号">
-                <el-input v-model="form.cardCode"></el-input>
+                <el-input v-model="form.cardCode" :disabled="defaultInput"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="11">
               <el-form-item label="学员编号">
-                <el-input v-model="form.studentNo"></el-input>
+                <el-input v-model="form.studentNo" :disabled="defaultInput"></el-input>
               </el-form-item>
             </el-col>
-          </el-row>
-          <el-row>
+            <el-col :span="13">
+              <el-form-item label="执行科目">
+                <el-checkbox-group v-model="form.parts">
+<!--                  <el-checkbox :label="part" :disabled="checkSelect('123')">全选</el-checkbox>-->
+                  <el-checkbox label="1" :disabled="checkSelect('1')">理论</el-checkbox>
+                  <el-checkbox label="2" :disabled="checkSelect('2')">科二</el-checkbox>
+                  <el-checkbox label="3" :disabled="checkSelect('3')">科三</el-checkbox>
+                </el-checkbox-group>
+              </el-form-item>
+            </el-col>
           </el-row>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">提交</el-button>
@@ -39,17 +47,27 @@
     name: 'entDetail',
     data: function () {
       return {
+        part: ['1', '2', '3'],
+        initialValue: [],
+        defaultInput: false,
         form: {
           name: '',
           cardCode: '',
-          studentNo: ''
+          studentNo: '',
+          parts: []
         }
       }
     },
     created () {
       this.defaultSet()
+      if (this.$route.query.id) {
+        this.defaultInput = true
+      }
     },
     methods: {
+      checkSelect (value) {
+        return this.initialValue.indexOf(value) !== -1
+      },
       defaultSet () {
         if (this.$route.query.id) {
           this.$axios.get('/rebuild/student/detail', { params: {
@@ -57,6 +75,7 @@
             }}).then((res) => {
             if (res) {
               this.form = res.data
+              this.initialValue = JSON.parse(JSON.stringify(this.form.parts))
             }
           })
         }

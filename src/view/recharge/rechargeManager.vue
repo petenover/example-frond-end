@@ -10,8 +10,7 @@
         </el-form-item>
         <el-form-item label="充值类型">
           <el-select v-model="queryParams.type" placeholder="请选择" clearable>
-            <el-option label="充值名额" value="recharge"></el-option>
-            <el-option label="消费名额" value="consume"></el-option>
+            <el-option label="学员消费名额" value="consume"></el-option>
             <el-option label="延长有效期(天)" value="prolong"></el-option>
           </el-select>
         </el-form-item>
@@ -82,15 +81,47 @@
         typeList: [
           {
             value: 'recharge',
-            label: '充值名额'
+            label: '充值学员名额'
+          },
+          {
+            value: 'rechargeTheory',
+            label: '充值理论名额'
+          },
+          {
+            value: 'rechargeTwo',
+            label: '充值科二名额'
           },
           {
             value: 'consume',
-            label: '消费名额'
+            label: '学员消费名额'
+          },
+          {
+            value: 'rechargeThree',
+            label: '充值科三名额'
+          },
+          {
+            value: '1consume',
+            label: '理论消费名额'
+          },
+          {
+            value: '2consume',
+            label: '科二消费名额'
+          },
+          {
+            value: '3consume',
+            label: '科三消费名额'
+          },
+          {
+            value: '4consume',
+            label: '理论消费名额'
           },
           {
             value: 'prolong',
             label: '延长有效期(天)'
+          },
+          {
+            value: 'rechargeAll',
+            label: '充值全科目名额'
           }
         ]
       }

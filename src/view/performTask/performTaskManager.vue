@@ -247,12 +247,13 @@
         this.$axios.get('/kernel/build/checkout/student', {params: {
           studentNo: value,
           startTime: this.form.startTime,
-          endTime: this.form.endTime
+          endTime: this.form.endTime,
+            partType: this.form.partType
         }}).then((res) => {
           if (res && res.code === 0) {
             this.otherDis = false
           } else {
-            this.$alert('所选学员存在异常，请重新选择！', '提示', {
+            this.$alert(res.msg, '提示', {
               confirmButtonText: '确定',
               callback: action => {
                 this.form.studentNo = ''

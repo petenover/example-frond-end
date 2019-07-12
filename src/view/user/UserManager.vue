@@ -37,9 +37,25 @@
             prop="name"
             label="用户姓名">
           </el-table-column>
+<!--          <el-table-column-->
+<!--            prop="quota"-->
+<!--            label="学员剩余名额"-->
+<!--            width="100px">-->
+<!--          </el-table-column>-->
           <el-table-column
-            prop="quota"
-            label="剩余名额">
+            prop="theoryQuota"
+            label="理论剩余名额"
+            width="100px">
+          </el-table-column>
+          <el-table-column
+            prop="partTwoQuota"
+            label="科二剩余名额"
+            width="100px">
+          </el-table-column>
+          <el-table-column
+            prop="partThreeQuota"
+            label="科三剩余名额"
+            width="100px">
           </el-table-column>
           <el-table-column
             prop="districtName"
@@ -66,11 +82,14 @@
           <el-form :model="form" ref="form">
             <el-form-item label="充值类型" label-width='80px'>
               <el-select v-model="form.type" placeholder="请选择充值类型" clearable>
-                <el-option label="充值名额" value="recharge"></el-option>
+                <el-option label="充值全科目名额" value="rechargeAll"></el-option>
+                <el-option label="充值理论名额" value="rechargeTheory"></el-option>
+                <el-option label="充值科二名额" value="rechargeTwo"></el-option>
+                <el-option label="充值科三名额" value="rechargeThree"></el-option>
                 <el-option label="延长有效期" value="prolong"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item :label="form.type === 'recharge' ? '充值数量' : '延长天数'" label-width='80px'>
+            <el-form-item :label="form.type === 'prolong' ? '延长天数' : '充值数量'" label-width='80px'>
               <el-input type="number" v-model="form.quota" min="1" max="99999" placeholder="请输入1-99999的正整数" clearable></el-input>
             </el-form-item>
           </el-form>
@@ -98,7 +117,7 @@
     </div>
     <div class="container" v-show="!listShow">
       <div class="form-box">
-        <el-form class="form-ipt" ref="form" :model="form" label-width="80px">
+        <el-form class="form-ipt" ref="form" :model="form" label-width="100px">
           <el-row>
             <el-col :span="11">
               <el-form-item label="登录名">
@@ -137,10 +156,31 @@
               </el-form-item>
             </el-col>
           </el-row>
+<!--          <el-row>-->
+<!--            <el-col :span="11">-->
+<!--              <el-form-item label="学员剩余名额">-->
+<!--                <el-input width="160px" v-model="form.quota" readonly></el-input>-->
+<!--              </el-form-item>-->
+<!--            </el-col>-->
+<!--          </el-row>-->
           <el-row>
             <el-col :span="11">
-              <el-form-item label="名额">
-                <el-input width="215px" v-model="form.quota" readonly></el-input>
+              <el-form-item label="理论剩余名额">
+                <el-input width="160px" v-model="form.theoryQuota" readonly></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="11">
+              <el-form-item label="科二剩余名额">
+                <el-input width="160px" v-model="form.partTwoQuota" readonly></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="11">
+              <el-form-item label="科三剩余名额">
+                <el-input width="160px" v-model="form.partThreeQuota" readonly></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -169,7 +209,10 @@ export default {
         password: '',
         districtCode: '',
         quota: '',
-        type: 'recharge',
+        theoryQuota: '',
+        partTwoQuota: '',
+        partThreeQuota: '',
+        type: 'rechargeTheory',
         id: ''
       },
       passDis: true,

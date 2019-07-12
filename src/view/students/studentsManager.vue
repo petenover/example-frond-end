@@ -61,10 +61,10 @@
           </el-table-column>
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <!--<router-link :to="{path: $route.path.replace(/manager/g, 'detail'), query: {id: scope.row.id}}"
+              <router-link :to="{path: $route.path.replace(/manager/g, 'detail'), query: {id: scope.row.id}}"
                            class="pull-left m-r-xm">
                 <el-button type="primary" size="small" icon="el-icon-edit" v-permission="'student:edit'"></el-button>
-              </router-link>-->
+              </router-link>
               <el-button type="danger" size="small" icon="el-icon-delete" @click='remove(scope.row.id)' v-permission="'student:delete'"></el-button>
             </template>
           </el-table-column>
