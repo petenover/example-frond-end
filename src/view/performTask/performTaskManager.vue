@@ -95,7 +95,12 @@
           <el-form-item label="压缩包" label-width="150px">
             <el-upload class="avatar-uploader"
                         :action="baseUrl + '/kernel/build/upload/zip'"
-                        :data="{'studentNo': form.studentNo}"
+                        :data="{
+                          'studentNo': form.studentNo,
+                          'startTime': form.startTime,
+                          'endTime': form.endTime,
+                          'partType': form.partType
+                        }"
                         :show-file-list="true"
                         :on-success="handleAvatarSuccess"
                         :before-upload="beforeAvatarUpload">
@@ -134,7 +139,7 @@
           partType: '1',      // 培训部分
           projectType: '',   // 培训项目
           trackId: '',       // 轨迹ID
-          file: ''           // 学员培训图片压缩包
+          file: ''          // 学员培训图片压缩包
         },
         coachDis: true,      // 教练是否可选
         studentDis: true,    // 学员是否可选
@@ -263,10 +268,17 @@
         })
       },
       handleAvatarSuccess (res) {
-        this.$message({
-          message: '压缩包上传成功',
-          type: 'success'
-        })
+        if (res.code !== 0) {
+          this.$message({
+            message: res.msg,
+            type: 'error'
+          })
+        } else {
+          this.$message({
+            message: '压缩包上传成功',
+            type: 'success'
+          })
+        }
       },
       beforeAvatarUpload (file) {
         // let fileName = file.name
@@ -274,11 +286,19 @@
         // let lastName = fileName.substring(pos, fileName.length)
         // const isZIP = file.type === 'application/x-zip-compressed'
         // const isLt5M = file.size / 1024 < 500
+        if (!this.form.startTime || !this.form.endTime) {
+          this.$message.error('请先选择任务时间')
+          return false
+        }
         if (!this.form.studentNo) {
           // if (!isLt5M) {
           //   this.$message.error('压缩包大小不能超过 5MB!')
           // }
           this.$message.error('请先选择学员')
+          return false
+        }
+        if (!this.form.partType) {
+          this.$message.error('请先选择科目')
           return false
         }
       },
