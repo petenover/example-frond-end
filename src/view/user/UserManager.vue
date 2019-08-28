@@ -8,16 +8,6 @@
         <el-form-item label="用户名">
           <el-input v-model="queryParams.name" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="区域">
-          <el-select v-model="queryParams.districtCode" placeholder="请选择" clearable>
-            <el-option
-              v-for="item in districtList"
-              :key="item.id"
-              :label="item.name"
-              :value="item.code"
-            ></el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="getData">查询</el-button>
         </el-form-item>
@@ -36,30 +26,6 @@
           <el-table-column
             prop="name"
             label="用户姓名">
-          </el-table-column>
-<!--          <el-table-column-->
-<!--            prop="quota"-->
-<!--            label="学员剩余名额"-->
-<!--            width="100px">-->
-<!--          </el-table-column>-->
-          <el-table-column
-            prop="theoryQuota"
-            label="理论剩余名额"
-            width="100px">
-          </el-table-column>
-          <el-table-column
-            prop="partTwoQuota"
-            label="科二剩余名额"
-            width="100px">
-          </el-table-column>
-          <el-table-column
-            prop="partThreeQuota"
-            label="科三剩余名额"
-            width="100px">
-          </el-table-column>
-          <el-table-column
-            prop="districtName"
-            label="区域">
           </el-table-column>
           <el-table-column
             prop="expiryDate"
@@ -82,10 +48,6 @@
           <el-form :model="form" ref="form">
             <el-form-item label="充值类型" label-width='80px'>
               <el-select v-model="form.type" placeholder="请选择充值类型" clearable>
-                <el-option label="充值全科目名额" value="rechargeAll"></el-option>
-                <el-option label="充值理论名额" value="rechargeTheory"></el-option>
-                <el-option label="充值科二名额" value="rechargeTwo"></el-option>
-                <el-option label="充值科三名额" value="rechargeThree"></el-option>
                 <el-option label="延长有效期" value="prolong"></el-option>
               </el-select>
             </el-form-item>
@@ -142,48 +104,6 @@
               <el-button type="success" @click="changePass">提交</el-button>
             </el-col>
           </el-row>
-          <el-row>
-            <el-col :span="11">
-              <el-form-item label="区域">
-                <el-select v-model="form.districtCode" placeholder="请选择" disabled>
-                  <el-option
-                    v-for="item in districtList"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.code"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-          </el-row>
-<!--          <el-row>-->
-<!--            <el-col :span="11">-->
-<!--              <el-form-item label="学员剩余名额">-->
-<!--                <el-input width="160px" v-model="form.quota" readonly></el-input>-->
-<!--              </el-form-item>-->
-<!--            </el-col>-->
-<!--          </el-row>-->
-          <el-row>
-            <el-col :span="11">
-              <el-form-item label="理论剩余名额">
-                <el-input width="160px" v-model="form.theoryQuota" readonly></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="11">
-              <el-form-item label="科二剩余名额">
-                <el-input width="160px" v-model="form.partTwoQuota" readonly></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="11">
-              <el-form-item label="科三剩余名额">
-                <el-input width="160px" v-model="form.partThreeQuota" readonly></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
         </el-form>
       </div>
     </div>
@@ -220,11 +140,6 @@ export default {
     }
   },
   created () {
-    this.$axios.get('/system/district/list').then(res => {
-      if (res && res.data) {
-        this.districtList = res.data
-      }
-    })
   },
   mounted () {
     setTimeout(() => {

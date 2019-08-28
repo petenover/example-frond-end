@@ -21,61 +21,10 @@ export default {
             permissionList: [],
             navList: [
                 {
-                    name: '业务管理',
-                    icon: 'nav-icon busi-icon',
-                    url: 'buss',
-                    children: []
-                },
-                {
-                    name: '日志管理',
-                    icon: 'el-icon-tickets',
-                    url: 'log',
-                    children: []
-                },
-                {
                     name: '系统设置',
                     icon: 'el-icon-setting',
                     url: 'system',
                     children: []
-                }
-            ],
-            bussChildren: [
-                {
-                    name: '车辆管理',
-                    permission: 'car:view',
-                    url: '/buss/cars/manager'
-                },
-                {
-                    name: '学员管理',
-                    permission: 'student:view',
-                    url: '/buss/students/manager'
-                },
-                {
-                    name: '教练管理',
-                    permission: 'coach:view',
-                    url: '/buss/coach/manager'
-                },
-                {
-                    name: '终端管理',
-                    permission: 'terminal:view',
-                    url: '/buss/terminal/manager'
-                },
-                {
-                    name: '轨迹管理',
-                    permission: 'track:view',
-                    url: '/buss/track/manager'
-                }
-            ],
-            platChildren: [
-                {
-                    name: '充值消费记录',
-                    permission: 'recharge:view',
-                    url: '/log/recharge/manager'
-                },
-                {
-                    name: '任务记录',
-                    permission: 'task:view',
-                    url: '/log/task/manager'
                 }
             ],
             systemChildren: [
@@ -88,16 +37,6 @@ export default {
                     name: '系统用户管理',
                     permission: 'user:view',
                     url: '/system/user/manager'
-                },
-                {
-                    name: '平台设置',
-                    permission: 'platform:view',
-                    url: '/system/platform/manager'
-                },
-                {
-                    name: '任务执行',
-                    permission: 'task:build',
-                    url: '/system/performTask/manager'
                 }
             ]
         }
@@ -116,9 +55,7 @@ export default {
                     this.$cookie.set('permissions', this.permissionList)
                     this.$cookie.set('flag', this.userInfo.flag)
                     this.$cookie.set('userId', this.userInfo.id)
-                    this.filterPermiss(this.bussChildren, this.navList[0].children)
-                    this.filterPermiss(this.platChildren, this.navList[1].children)
-                    this.filterPermiss(this.systemChildren, this.navList[2].children)
+                    this.filterPermiss(this.systemChildren, this.navList[0].children)
                 }
             })
         } else {

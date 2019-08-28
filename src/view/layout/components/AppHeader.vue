@@ -4,7 +4,7 @@
         <div class="logo">
             <!-- <div class="logo-img"></div> -->
             <transition name="el-fade-in">
-                <div class="logo-title t-center" v-show="!collapse">计时平台测试系统</div>
+                <div class="logo-title t-center" v-show="!collapse">测试系统</div>
             </transition>
         </div>
         <!-- 折叠按钮 -->
@@ -12,7 +12,7 @@
             <i class="el-icon-menu"></i>
         </div>
         <div class="pop-text">
-            本工具仅供测试计时平台使用，请勿非法应用！因非法应用产生的法律风险，由使用者自行承当法律风险！
+          本工具仅供测试/更新/迭代技术使用，请勿非法应用！因非法应用产生的法律风险，由使用者自行承当法律风险！
         </div>
         <div class="header-right">
             <div class="header-user-con">

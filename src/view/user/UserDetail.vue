@@ -17,36 +17,12 @@
           </el-row>
           <el-row>
             <el-col :span="11">
-              <el-form-item label="区域" prop="name">
-                <el-select v-model="form.districtCode" clearable filterable placeholder="选择您驾校备案所在区域">
-                  <el-option
-                    v-for="item in districtList"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.code"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="11">
               <el-form-item label="密码">
                 <el-input width="215px" type="password" v-model="form.password"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="11">
-              <el-form-item label="平台" prop="name">
-                <el-select v-model="form.platformId" placeholder="请选择">
-                  <el-option
-                    v-for="item in platformList"
-                    :key="item.id"
-                    :label="item.host + ':' + item.port"
-                    :value="item.id"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
             <el-col :span="11">
               <el-form-item label="角色">
                 <el-select v-model="roles" multiple placeholder="请选择">
@@ -120,12 +96,6 @@ export default {
     })
     this.$axios.get('/system/role/list').then(res => {
       this.roleList = res ? res.data.content : []
-    })
-    this.$axios.get('/system/district/list').then(res => {
-      this.districtList = res ? res.data : []
-    })
-    this.$axios.get('/system/platform/list').then(res => {
-      this.platformList = res ? res.data.content : []
     })
   },
   methods: {

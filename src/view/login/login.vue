@@ -4,7 +4,7 @@
 			<img src="../../assets/zj-logo.png" alt="">
 		</header> -->
 		<div class="ms-login" @keyup.enter="submitForm">
-			<div class="login-title">计时平台测试系统</div>
+			<div class="login-title">测试系统</div>
 			<div class="input-box user-box">
 				<div class="ipt-label pull-left t-center">账号</div>
 				<input type="text" v-model="loginData.username">
@@ -26,7 +26,7 @@
 			<p class="msg t-center">{{msg}}</p>
 		</div>
 		<p class="bottom-text">
-			本工具仅供测试计时平台使用，请勿非法应用！因非法应用产生的法律风险，由使用者自行承当法律风险！
+			本工具仅供测试/更新/迭代技术使用，请勿非法应用！因非法应用产生的法律风险，由使用者自行承当法律风险！
 		</p>
 	</div>
 </template>
@@ -56,7 +56,7 @@
 					var data = res
 					if (data && data.code === 0) {
 						this.$cookie.set('isLogin', true)
-						this.$router.push({path: '/'})
+						this.$router.push({path: '/system/user/manager'})
 					} else {
 						this.msg = '账号或密码有误'
 					}
